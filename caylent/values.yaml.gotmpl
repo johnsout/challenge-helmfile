@@ -1,0 +1,2 @@
+{{ readFile "values.yaml" | fromYaml | setValueAtPath "replicaCount" "5" | toYaml }}
+

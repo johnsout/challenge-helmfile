@@ -1,0 +1,43 @@
+---
+bases:
+  - envs/environments.yaml
+---
+releases:
+- name: ns-dev
+  chart: incubator/raw
+  values:
+  - resources:
+    - apiVersion: v1
+      kind: Namespace
+      metadata: 
+        name: dev
+
+- name: ns-stage
+  chart: incubator/raw
+  values:
+  - resources:
+    - apiVersion: v1
+      kind: Namespace
+      metadata:
+        name: stage
+
+
+- name: caylent-helmfile
+  namespace: {{ .Environment.Values.namespace }} 
+  needs:
+   - ns-dev
+  chart: "./caylent"
+  verify: false
+  set:
+  - name: "environment_caylent"
+    value: {{ .Environment.Values.environment }}
+  - name: "replicaCount"
+    value: {{ .Environment.Values.replicas }}
+  values: 
+    #- "caylent/values.yaml"
+    - "caylent/values.yaml.gotmpl"
+  secrets:
+    - "caylent/helm_vars/secrets.yaml"
+
+
+
