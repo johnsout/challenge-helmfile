@@ -1,3 +1,5 @@
 environment: stage
 namespace: stage
 replicas: 5
+secret_path: caylent/helm_vars/stage_secret.yaml
+

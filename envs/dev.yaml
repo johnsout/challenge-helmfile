@@ -1,3 +1,4 @@
 environment: development
 namespace: dev
 replicas: "2"
+secret_path: caylent/helm_vars/dev_secret.yaml
